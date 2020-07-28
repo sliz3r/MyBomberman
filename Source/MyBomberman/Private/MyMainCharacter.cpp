@@ -1,6 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-#include "MyBombermanCharacter.h"
+#include "MyMainCharacter.h"
 
 #include "HeadMountedDisplayFunctionLibrary.h"
 
@@ -11,11 +9,10 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
-#include "GameFramework/SpringArmComponent.h"
 
 #include "MyBomb.h"
 
-AMyBombermanCharacter::AMyBombermanCharacter()
+AMyMainCharacter::AMyMainCharacter()
 {
     GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
@@ -23,32 +20,36 @@ AMyBombermanCharacter::AMyBombermanCharacter()
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
 }
 
-void AMyBombermanCharacter::SetupPlayerInputComponent(class UInputComponent* playerInputComponent)
+void AMyMainCharacter::SetupPlayerInputComponent(class UInputComponent* playerInputComponent)
 {
     check(playerInputComponent);
-    playerInputComponent->BindAction("PlaceBomb", IE_Pressed, this, &AMyBombermanCharacter::PlaceBomb);
+    playerInputComponent->BindAction("PlaceBomb", IE_Pressed, this, &AMyMainCharacter::PlaceBomb);
 
-    playerInputComponent->BindAxis("MoveForward", this, &AMyBombermanCharacter::MoveForward);
-    playerInputComponent->BindAxis("MoveRight", this, &AMyBombermanCharacter::MoveRight);
+    playerInputComponent->BindAxis("MoveForward", this, &AMyMainCharacter::MoveForward);
+    playerInputComponent->BindAxis("MoveRight", this, &AMyMainCharacter::MoveRight);
 }
 
-float AMyBombermanCharacter::TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+float AMyMainCharacter::TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
     Destroy();
     return DamageAmount;
 }
 
-void AMyBombermanCharacter::MoveForward(float value)
+void AMyMainCharacter::ApplyPowerUp(PowerUpType type)
+{
+}
+
+void AMyMainCharacter::MoveForward(float value)
 {
     Move(value, EAxis::X);
 }
 
-void AMyBombermanCharacter::MoveRight(float value)
+void AMyMainCharacter::MoveRight(float value)
 {
     Move(value, EAxis::Y);
 }
 
-void AMyBombermanCharacter::Move(float value, EAxis::Type axis)
+void AMyMainCharacter::Move(float value, EAxis::Type axis)
 {
     if ((Controller != NULL) && (value != 0.0f))
     {
@@ -59,14 +60,14 @@ void AMyBombermanCharacter::Move(float value, EAxis::Type axis)
     }
 }
 
-void AMyBombermanCharacter::PlaceBomb()
+void AMyMainCharacter::PlaceBomb()
 {
     if (UWorld* currentWorld = GetWorld())
     {
         FTransform locationToSpawn = GetActorTransform();
         FVector location = locationToSpawn.GetLocation();
         locationToSpawn.SetLocation(FVector(location.X, location.Y, location.Z + BombZOffset));
-        locationToSpawn.SetRotation(FQuat(0,0,0,0));
+        locationToSpawn.SetRotation(FQuat(0, 0, 0, 0));
 
         FActorSpawnParameters spawnParameters;
         currentWorld->SpawnActor<AMyBomb>(BombToSpawn, locationToSpawn, spawnParameters);

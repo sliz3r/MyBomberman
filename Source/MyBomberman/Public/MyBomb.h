@@ -11,18 +11,23 @@ class MYBOMBERMAN_API AMyBomb : public AActor
 {
     GENERATED_BODY()
 
+    /** Bomb Mesh */
     UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
-    UStaticMeshComponent* MyBreakableBrickMesh;
+    UStaticMeshComponent* MyBombMesh;
 
+    /** Time to explode */
     UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
     float ExplosionDelay;
 
+    /** RayCast Distance */
     UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
     float ExplosionDistance = 1000.f;
 
+    /** Bomb Damage */
     UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
     float BombDamage = 1.f;
 
+    /** To track if we are already exploding */
     UPROPERTY(VisibleAnywhere, Category = "Bomb Info")
     bool IsExploding = false;
 

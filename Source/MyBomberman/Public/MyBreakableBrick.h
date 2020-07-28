@@ -11,6 +11,7 @@ class MYBOMBERMAN_API AMyBreakableBrick : public AActor
 {
     GENERATED_BODY()
 
+    /** Brick Mesh */
     UPROPERTY(EditAnywhere, Category = "Components")
     UStaticMeshComponent* MyBreakableBrickMesh;
 

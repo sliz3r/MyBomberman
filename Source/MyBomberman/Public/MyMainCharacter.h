@@ -4,15 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "MyBombermanCharacter.generated.h"
+#include "MyPowerUpTriggerBox.h"
+#include "MyMainCharacter.generated.h"
 
-UCLASS(config = Game)
-class AMyBombermanCharacter : public ACharacter
+UCLASS()
+class MYBOMBERMAN_API AMyMainCharacter : public ACharacter
 {
     GENERATED_BODY()
 
 public:
-    AMyBombermanCharacter();
+    AMyMainCharacter();
+
+    void ApplyPowerUp(PowerUpType type);
 
     /** Time to place bombs in seconds. */
     UPROPERTY(EditAnywhere, Category = Bomb)
@@ -37,4 +40,3 @@ protected:
 private:
     void Move(float value, EAxis::Type axis);
 };
-
