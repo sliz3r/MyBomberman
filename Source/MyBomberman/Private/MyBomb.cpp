@@ -11,3 +11,15 @@ AMyBomb::AMyBomb()
     SetRootComponent(MyBombMesh);
 }
 
+void AMyBomb::Explode()
+{
+    Destroy();
+}
+
+void AMyBomb::BeginPlay()
+{
+    Super::BeginPlay();
+
+    FTimerHandle ExplodeTimer;
+    GetWorldTimerManager().SetTimer(ExplodeTimer, this, &AMyBomb::Explode, ExplosionDelay);
+}
