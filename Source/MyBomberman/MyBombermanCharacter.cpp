@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MyBombermanCharacter.h"
 
@@ -62,7 +62,9 @@ void AMyBombermanCharacter::PlaceBomb()
     if (UWorld* currentWorld = GetWorld())
     {
         FTransform locationToSpawn = GetActorTransform();
-        locationToSpawn.TransformPosition(FVector(0.f, 0.f, BombZOffset));
+        FVector location = locationToSpawn.GetLocation();
+        locationToSpawn.SetLocation(FVector(location.X, location.Y, location.Z + BombZOffset));
+        locationToSpawn.SetRotation(FQuat(0,0,0,0));
 
         FActorSpawnParameters spawnParameters;
         currentWorld->SpawnActor<AMyBomb>(BombToSpawn, locationToSpawn, spawnParameters);

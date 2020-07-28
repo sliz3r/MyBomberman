@@ -17,6 +17,9 @@ class MYBOMBERMAN_API AMyBomb : public AActor
     UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
     float ExplosionDelay;
 
+    UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
+    float ExplosionDistance = 1000.f;
+
 public:
     AMyBomb();
 
