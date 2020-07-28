@@ -12,13 +12,19 @@ class MYBOMBERMAN_API AMyBomb : public AActor
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
-    UStaticMeshComponent* MyBombMesh;
+    UStaticMeshComponent* MyBreakableBrickMesh;
 
     UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
     float ExplosionDelay;
 
     UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
     float ExplosionDistance = 1000.f;
+
+    UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
+    float BombDamage = 1.f;
+
+    UPROPERTY(VisibleAnywhere, Category = "Bomb Info")
+    bool IsExploding = false;
 
 public:
     AMyBomb();
@@ -28,4 +34,5 @@ public:
 
 protected:
     virtual void BeginPlay() override;
+    virtual float TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 };

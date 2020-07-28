@@ -15,9 +15,6 @@
 
 #include "MyBomb.h"
 
-//////////////////////////////////////////////////////////////////////////
-// AMyBombermanCharacter
-
 AMyBombermanCharacter::AMyBombermanCharacter()
 {
     GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -33,6 +30,12 @@ void AMyBombermanCharacter::SetupPlayerInputComponent(class UInputComponent* pla
 
     playerInputComponent->BindAxis("MoveForward", this, &AMyBombermanCharacter::MoveForward);
     playerInputComponent->BindAxis("MoveRight", this, &AMyBombermanCharacter::MoveRight);
+}
+
+float AMyBombermanCharacter::TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+    Destroy();
+    return DamageAmount;
 }
 
 void AMyBombermanCharacter::MoveForward(float value)
@@ -58,7 +61,6 @@ void AMyBombermanCharacter::Move(float value, EAxis::Type axis)
 
 void AMyBombermanCharacter::PlaceBomb()
 {
-    UE_LOG(LogTemp, Warning, TEXT("BombPlaced"));
     if (UWorld* currentWorld = GetWorld())
     {
         FTransform locationToSpawn = GetActorTransform();

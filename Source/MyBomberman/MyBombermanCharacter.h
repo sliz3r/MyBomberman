@@ -32,6 +32,7 @@ protected:
     void PlaceBomb();
 
     virtual void SetupPlayerInputComponent(class UInputComponent* playerInputComponent) override;
+    virtual float TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 
 private:
     void Move(float value, EAxis::Type axis);
