@@ -1,13 +1,19 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MyBombermanCharacter.h"
+
 #include "HeadMountedDisplayFunctionLibrary.h"
+
 #include "Camera/CameraComponent.h"
+
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+
+#include "MyBomb.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AMyBombermanCharacter
@@ -51,4 +57,14 @@ void AMyBombermanCharacter::Move(float value, EAxis::Type axis)
 }
 
 void AMyBombermanCharacter::PlaceBomb()
-{}
+{
+    UE_LOG(LogTemp, Warning, TEXT("BombPlaced"));
+    if (UWorld* currentWorld = GetWorld())
+    {
+        FTransform locationToSpawn = GetActorTransform();
+        locationToSpawn.TransformPosition(FVector(0.f, 0.f, BombZOffset));
+
+        FActorSpawnParameters spawnParameters;
+        currentWorld->SpawnActor<AMyBomb>(BombToSpawn, locationToSpawn, spawnParameters);
+    }
+}

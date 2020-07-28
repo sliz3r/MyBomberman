@@ -9,10 +9,10 @@
 UCLASS(minimalapi)
 class AMyBombermanGameMode : public AGameModeBase
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	AMyBombermanGameMode();
+    AMyBombermanGameMode();
 };
 
 
