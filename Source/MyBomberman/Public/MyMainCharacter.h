@@ -29,6 +29,10 @@ public:
     UPROPERTY(EditAnywhere, Category = Bomb)
     TSubclassOf<class AMyBomb> BombToSpawn;
 
+    /** Bomb placement cooldown */
+    UPROPERTY(VisibleAnywhere, Category = Bomb)
+    bool BombPlacementCooldownActive = false;
+
 protected:
     void MoveForward(float value);
     void MoveRight(float value);
@@ -39,4 +43,9 @@ protected:
 
 private:
     void Move(float value, EAxis::Type axis);
+    
+    inline void RestoreBombPlacementCooldown() { BombPlacementCooldownActive = false; }
+
+private:
+    FTimerHandle BombPlacementCooldownTimer;
 };

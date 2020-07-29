@@ -62,7 +62,8 @@ void AMyMainCharacter::Move(float value, EAxis::Type axis)
 
 void AMyMainCharacter::PlaceBomb()
 {
-    if (UWorld* currentWorld = GetWorld())
+    UWorld* currentWorld = GetWorld();
+    if (BombPlacementCooldownActive == false && currentWorld != nullptr)
     {
         FTransform locationToSpawn = GetActorTransform();
         FVector location = locationToSpawn.GetLocation();
@@ -71,5 +72,7 @@ void AMyMainCharacter::PlaceBomb()
 
         FActorSpawnParameters spawnParameters;
         currentWorld->SpawnActor<AMyBomb>(BombToSpawn, locationToSpawn, spawnParameters);
+        BombPlacementCooldownActive = true;
+        GetWorldTimerManager().SetTimer(BombPlacementCooldownTimer, this, &AMyMainCharacter::RestoreBombPlacementCooldown, TimeBetweenBoomPlacement);
     }
 }

@@ -34,10 +34,17 @@ void AMyBomb::Explode()
 
             for (const FVector& endTrace : endTraces)
             {
+#ifdef UE_BUILD_DEBUG
                 DrawDebugLine(currentWorld, startTrace, endTrace, FColor::Red, false, 1.0f);
+#endif
                 if (currentWorld->LineTraceSingleByChannel(*hitResult, startTrace, endTrace, ECC_WorldStatic, *collisionParameters))
                 {
-                    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Turquoise, FString::Printf(TEXT("Hit Detected: %s"), *hitResult->Actor->GetName()));
+#ifdef UE_BUILD_DEBUG
+                    if (GEngine != nullptr)
+                    {
+                        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Turquoise, FString::Printf(TEXT("Hit Detected: %s"), *hitResult->Actor->GetName()));
+                    }
+#endif
                     FDamageEvent dummyDamageEvent;
                     hitResult->Actor->TakeDamage(BombDamage, dummyDamageEvent, GetInstigatorController(), this);
                 }

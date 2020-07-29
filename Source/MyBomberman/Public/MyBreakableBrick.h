@@ -18,9 +18,5 @@ class MYBOMBERMAN_API AMyBreakableBrick : public AActor
 public:
     AMyBreakableBrick();
 
-protected:
-    virtual void BeginPlay() override;
-
-public:
     virtual float TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 };

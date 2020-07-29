@@ -9,13 +9,9 @@ AMyBreakableBrick::AMyBreakableBrick()
     SetRootComponent(MyBreakableBrickMesh);
 }
 
-void AMyBreakableBrick::BeginPlay()
-{
-    Super::BeginPlay();
-}
-
 float AMyBreakableBrick::TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+    Destroy();
     return DamageAmount;
 }
 

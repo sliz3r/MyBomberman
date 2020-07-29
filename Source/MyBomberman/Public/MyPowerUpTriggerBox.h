@@ -19,11 +19,8 @@ class MYBOMBERMAN_API AMyPowerUpTriggerBox : public ATriggerBox
     GENERATED_BODY()
 
     /** PowerUp Type */
-    UPROPERTY(EditAnywhere, Category = Bomb)
+    UPROPERTY(EditAnywhere, Category = "Power Up")
     PowerUpType PowerUpType;
-
-protected:
-    virtual void BeginPlay() override;
 
 public:
     AMyPowerUpTriggerBox();
