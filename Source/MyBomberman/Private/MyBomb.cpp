@@ -47,6 +47,7 @@ void AMyBomb::Explode()
 #endif
                     FDamageEvent dummyDamageEvent;
                     hitResult->Actor->TakeDamage(BombDamage, dummyDamageEvent, GetInstigatorController(), this);
+                    collisionParameters->AddIgnoredActor(hitResult->Actor.Get());
                 }
             }
         }

@@ -6,7 +6,7 @@
 AMyBombermanGameMode::AMyBombermanGameMode()
 {
     // set default pawn class to our Blueprinted character
-    static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/ThirdPersonCPP/Blueprints/BombermanCharacter"));
+    static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/MyBomberman/Blueprints/BombermanCharacter"));
     if (PlayerPawnBPClass.Class != NULL)
     {
         DefaultPawnClass = PlayerPawnBPClass.Class;
