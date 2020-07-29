@@ -15,8 +15,23 @@ class MYBOMBERMAN_API AMyBreakableBrick : public AActor
     UPROPERTY(EditAnywhere, Category = "Components")
     UStaticMeshComponent* MyBreakableBrickMesh;
 
+    /** Damage Power Up */
+    UPROPERTY(EditAnywhere, Category = "Power Up")
+    int PercentageOfSpawnPowerUp;
+
+    /** Speed Power Up */
+    UPROPERTY(EditAnywhere, Category = "Power Up")
+    TSubclassOf<class AMyPowerUpTriggerBox> SpeedPowerUpPrefab;
+
+    /** Damage Power Up */
+    UPROPERTY(EditAnywhere, Category = "Power Up")
+    TSubclassOf<class AMyPowerUpTriggerBox> DamagePowerUpPrefab;
+
 public:
     AMyBreakableBrick();
 
     virtual float TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
+
+private:
+    void SpawnPowerUp();
 };
