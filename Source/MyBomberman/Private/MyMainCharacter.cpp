@@ -29,14 +29,66 @@ void AMyMainCharacter::SetupPlayerInputComponent(class UInputComponent* playerIn
     playerInputComponent->BindAxis("MoveRight", this, &AMyMainCharacter::MoveRight);
 }
 
-float AMyMainCharacter::TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+float AMyMainCharacter::TakeDamage(float damageAmount, const FDamageEvent& damageEvent, AController* eventInstigator, AActor* damageCauser)
 {
-    Destroy();
-    return DamageAmount;
+    PlayerHealth -= damageAmount;
+
+    if (PlayerHealth <= 0.f)
+    {
+        Destroy();
+    }
+
+    return damageAmount;
 }
 
 void AMyMainCharacter::ApplyPowerUp(PowerUpType type)
 {
+    switch (type)
+    {
+        case PowerUpType::SPEED:
+        {
+            GetWorldTimerManager().ClearTimer(SpeedPowerUpCooldownTimer);
+            GetCharacterMovement()->MaxWalkSpeed += 1000;
+            GetWorldTimerManager().SetTimer(SpeedPowerUpCooldownTimer, this, &AMyMainCharacter::RevertSpeedPowerUp, PowerUpTime);
+        }
+        break;
+        case PowerUpType::DAMAGE:
+        {
+            GetWorldTimerManager().ClearTimer(DamagePowerUpCooldownTimer);
+            CanSpawnBigBomb = true;
+            GetWorldTimerManager().SetTimer(DamagePowerUpCooldownTimer, this, &AMyMainCharacter::RevertDamagePowerUp, PowerUpTime);
+        }
+        break;
+        default:
+        {
+            //Invalid PowerUpType
+            check(false);
+        }
+        break;
+    }
+}
+
+bool AMyMainCharacter::IsPowerActive(PowerUpType type)
+{
+    switch (type)
+    {
+        case PowerUpType::SPEED:
+        {
+            return GetWorldTimerManager().IsTimerActive(SpeedPowerUpCooldownTimer);
+        }
+        break;
+        case PowerUpType::DAMAGE:
+        {
+            return GetWorldTimerManager().IsTimerActive(DamagePowerUpCooldownTimer);
+        }
+        break;
+        default:
+        {
+            //Invalid PowerUpType
+            check(false);
+        }
+    }
+    return false;
 }
 
 void AMyMainCharacter::MoveForward(float value)
@@ -60,6 +112,24 @@ void AMyMainCharacter::Move(float value, EAxis::Type axis)
     }
 }
 
+void AMyMainCharacter::RevertSpeedPowerUp()
+{
+    GetCharacterMovement()->MaxWalkSpeed -= 1000;
+    GetWorldTimerManager().ClearTimer(SpeedPowerUpCooldownTimer);
+}
+
+void AMyMainCharacter::RevertDamagePowerUp()
+{
+    CanSpawnBigBomb = false;
+    GetWorldTimerManager().ClearTimer(DamagePowerUpCooldownTimer);
+}
+
+void AMyMainCharacter::RestoreBombPlacementCooldown()
+{
+    BombPlacementCooldownActive = false;
+    GetWorldTimerManager().ClearTimer(BombPlacementCooldownTimer);
+}
+
 void AMyMainCharacter::PlaceBomb()
 {
     UWorld* currentWorld = GetWorld();
@@ -71,7 +141,16 @@ void AMyMainCharacter::PlaceBomb()
         locationToSpawn.SetRotation(FQuat(0, 0, 0, 0));
 
         FActorSpawnParameters spawnParameters;
-        currentWorld->SpawnActor<AMyBomb>(BombToSpawn, locationToSpawn, spawnParameters);
+        if (CanSpawnBigBomb)
+        {
+            currentWorld->SpawnActor<AMyBomb>(BoostedBombToSpawn, locationToSpawn, spawnParameters);
+            GetWorldTimerManager().ClearTimer(DamagePowerUpCooldownTimer);
+            CanSpawnBigBomb = false;
+        }
+        else
+        {
+            currentWorld->SpawnActor<AMyBomb>(BombToSpawn, locationToSpawn, spawnParameters);
+        }
         BombPlacementCooldownActive = true;
         GetWorldTimerManager().SetTimer(BombPlacementCooldownTimer, this, &AMyMainCharacter::RestoreBombPlacementCooldown, TimeBetweenBoomPlacement);
     }

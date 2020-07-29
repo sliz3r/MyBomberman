@@ -50,7 +50,6 @@ void AMyBomb::Explode()
                 }
             }
         }
-
         Destroy();
     }
 }
