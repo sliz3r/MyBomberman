@@ -37,7 +37,7 @@ float AMyMainCharacter::TakeDamage(float damageAmount, const FDamageEvent& damag
 
     if (PlayerHealth <= 0.f)
     {
-        Destroy();
+        UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()));
     }
     else
     {
