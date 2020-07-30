@@ -4,8 +4,8 @@ Bomberman made in aprox 9 hours of work. Each player has 3 lifes, regular bombs 
 
 ## Controls
 ### Player 1 - Gamepad
-Left joystick - Movement
-A or X - Place bomb
+- Left joystick - Movement
+- A or X - Place bomb
 ### Player 2 - Keyboard
 AWSD - Movement
 Space - Place Bomb
@@ -20,6 +20,3 @@ Each time you kill a breakable brick (silver bricks) there is a chance of spawn 
 - Add a proper UI (Show current power up, show current health, UI flow to restart the game...)
 - Add some kind of AI to manage enemies.
 - Add more types of Power Ups.
-
-
-
