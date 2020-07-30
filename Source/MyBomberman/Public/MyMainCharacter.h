@@ -20,7 +20,7 @@ public:
 
     /** Time to place bombs in seconds. */
     UPROPERTY(EditAnywhere, Category = "Bomb")
-    float TimeBetweenBoomPlacement = 1.0f;
+    float TimeBetweenBoomPlacement = 1.f;
 
     /** Bomb Z offset */
     UPROPERTY(EditAnywhere, Category = "Bomb")
@@ -48,7 +48,11 @@ public:
 
     /** Time Power Ups can be used. */
     UPROPERTY(EditAnywhere, Category = "Power Up")
-    float PowerUpTime = 5.0f;
+    float PowerUpTime = 5.f;
+
+    /** Extra Speed Applied when picking up the Power Up. */
+    UPROPERTY(EditAnywhere, Category = "Power Up")
+    float SpeedExtraBoost = 1000.f;
 
 protected:
     void MoveForward(float value);
@@ -56,7 +60,7 @@ protected:
     void PlaceBomb();
 
     virtual void SetupPlayerInputComponent(class UInputComponent* playerInputComponent) override;
-    virtual float TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
+    virtual float TakeDamage(float damageAmount, const FDamageEvent& damageEvent, class AController* eventInstigator, class AActor* damageCauser) override;
 
 private:
     void Move(float value, EAxis::Type axis);

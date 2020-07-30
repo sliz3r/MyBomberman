@@ -21,10 +21,13 @@ void AMyBomb::BeginPlay()
     GetWorldTimerManager().SetTimer(ExplodeTimer, this, &AMyBomb::Explode, ExplosionDelay);
 }
 
-float AMyBomb::TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+float AMyBomb::TakeDamage(float damageAmount, const FDamageEvent& damageEvent, AController* eventInstigator, AActor* damageCauser)
 {
-    Explode();
-    return DamageAmount;
+    if (damageAmount > 0)
+    {
+        Explode();
+    }
+    return damageAmount;
 }
 
 void AMyBomb::Explode()

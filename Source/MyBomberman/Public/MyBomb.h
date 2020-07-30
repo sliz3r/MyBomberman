@@ -47,7 +47,7 @@ public:
 
 protected:
     virtual void BeginPlay() override;
-    virtual float TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
+    virtual float TakeDamage(float damageAmount, const FDamageEvent& damageEvent, class AController* eventInstigator, class AActor* damageCauser) override;
 
 private:
     void PerformRayCasts();

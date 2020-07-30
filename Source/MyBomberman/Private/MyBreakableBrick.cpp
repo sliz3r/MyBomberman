@@ -4,20 +4,23 @@
 #include "MyBreakableBrick.h"
 #include "MyPowerUpTriggerBox.h"
 
+#include "Engine.h"
+
 AMyBreakableBrick::AMyBreakableBrick()
 {
     MyBreakableBrickMesh = CreateDefaultSubobject<UStaticMeshComponent>("BreakableBrickMesh");
     SetRootComponent(MyBreakableBrickMesh);
 }
 
-float AMyBreakableBrick::TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+float AMyBreakableBrick::TakeDamage(float damageAmount, const FDamageEvent& damageEvent, AController* eventInstigator, AActor* damageCauser)
 {
     if ((FMath::RandRange(1, 100 / PercentageOfSpawnPowerUp) == 1))
     {
         SpawnPowerUp();
     }
+    UGameplayStatics::PlaySound2D(this, BreakingSound);
     Destroy();
-    return DamageAmount;
+    return damageAmount;
 }
 
 void AMyBreakableBrick::SpawnPowerUp()

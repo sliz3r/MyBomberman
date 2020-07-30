@@ -27,10 +27,14 @@ class MYBOMBERMAN_API AMyBreakableBrick : public AActor
     UPROPERTY(EditAnywhere, Category = "Power Up")
     TSubclassOf<class AMyPowerUpTriggerBox> DamagePowerUpPrefab;
 
+    /** Sound when breaking */
+    UPROPERTY(EditAnywhere, Category = "Power Up")
+    USoundWave* BreakingSound;
+
 public:
     AMyBreakableBrick();
 
-    virtual float TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
+    virtual float TakeDamage(float damageAmount, const FDamageEvent& damageEvent, class AController* eventInstigator, class AActor* damageCauser) override;
 
 private:
     void SpawnPowerUp();

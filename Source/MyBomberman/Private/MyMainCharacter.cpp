@@ -54,7 +54,7 @@ void AMyMainCharacter::ApplyPowerUp(PowerUpType type)
         case PowerUpType::SPEED:
         {
             GetWorldTimerManager().ClearTimer(SpeedPowerUpCooldownTimer);
-            GetCharacterMovement()->MaxWalkSpeed += 1000;
+            GetCharacterMovement()->MaxWalkSpeed += SpeedExtraBoost;
             GetWorldTimerManager().SetTimer(SpeedPowerUpCooldownTimer, this, &AMyMainCharacter::RevertSpeedPowerUp, PowerUpTime);
         }
         break;
@@ -120,7 +120,7 @@ void AMyMainCharacter::Move(float value, EAxis::Type axis)
 
 void AMyMainCharacter::RevertSpeedPowerUp()
 {
-    GetCharacterMovement()->MaxWalkSpeed -= 1000;
+    GetCharacterMovement()->MaxWalkSpeed -= SpeedExtraBoost;
     GetWorldTimerManager().ClearTimer(SpeedPowerUpCooldownTimer);
 }
 

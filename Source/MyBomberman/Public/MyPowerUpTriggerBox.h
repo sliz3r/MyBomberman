@@ -26,5 +26,5 @@ public:
     AMyPowerUpTriggerBox();
 
     UFUNCTION()
-    void OnOverlapBegin(class AActor* overlappedActor, class AActor* OtherActor);
+    void OnOverlapBegin(class AActor* overlappedActor, class AActor* otherActor);
 };
