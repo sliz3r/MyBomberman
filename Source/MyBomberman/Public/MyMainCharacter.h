@@ -42,6 +42,10 @@ public:
     UPROPERTY(EditAnywhere, Category = "Health")
     float PlayerHealth = 3.f;
 
+    /** Damage Received Sound */
+    UPROPERTY(EditAnywhere, Category = "Health")
+    USoundWave* DamageSound;
+
     /** Time Power Ups can be used. */
     UPROPERTY(EditAnywhere, Category = "Power Up")
     float PowerUpTime = 5.0f;

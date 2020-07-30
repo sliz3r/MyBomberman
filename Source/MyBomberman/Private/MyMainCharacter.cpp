@@ -6,10 +6,12 @@
 
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/PrimitiveComponent.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 
+#include "Engine.h"
 #include "MyBomb.h"
 
 AMyMainCharacter::AMyMainCharacter()
@@ -36,6 +38,10 @@ float AMyMainCharacter::TakeDamage(float damageAmount, const FDamageEvent& damag
     if (PlayerHealth <= 0.f)
     {
         Destroy();
+    }
+    else
+    {
+        UGameplayStatics::PlaySound2D(this, DamageSound);
     }
 
     return damageAmount;

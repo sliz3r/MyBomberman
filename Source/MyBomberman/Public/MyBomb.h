@@ -27,6 +27,14 @@ class MYBOMBERMAN_API AMyBomb : public AActor
     UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
     float BombDamage = 1.f;
 
+    /** Explosion FX */
+    UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
+    UParticleSystem* ExplosionFX;
+
+    /** ExplosionAudio */
+    UPROPERTY(EditAnywhere, Category = "Bomb Configuration")
+    USoundWave* ExplosionSound;
+
     /** To track if we are already exploding */
     UPROPERTY(VisibleAnywhere, Category = "Bomb Info")
     bool IsExploding = false;
@@ -40,4 +48,9 @@ public:
 protected:
     virtual void BeginPlay() override;
     virtual float TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
+
+private:
+    void PerformRayCasts();
+    void SpawnEffect();
+    void PlaySound();
 };
